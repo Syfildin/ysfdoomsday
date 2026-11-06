@@ -143,6 +143,19 @@
     color: var(--faint);
     text-transform: uppercase;
   }
+  .returns-link {
+    margin-top: 2.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--faint);
+    padding-bottom: 0.3rem;
+    transition: color 0.5s, text-shadow 0.5s, border-color 0.5s;
+  }
+  .returns-link:hover { color: var(--green); border-color: var(--deep); text-shadow: 0 0 12px var(--glow); }
   .ended h1, .ended .num { color: var(--green); text-shadow: 0 0 10px var(--glow), 0 0 50px var(--glow); }
   @media (max-width: 520px) { .sep { display: none; } }
   @media (prefers-reduced-motion: reduce) {
@@ -166,6 +179,7 @@
 
   <p class="omen" id="omen">Beware thou the Ides of March.</p>
   <p class="date">XV · III · MMXXVII</p>
+  <a class="returns-link" href="returns/">Who shall return</a>
 
 <script>
   // Ides of March: 15 March 2027, 00:00:00 Mountain Time (MDT, UTC-6)

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>They Shall Return</title>
+<meta name="description" content="Those who shall return in Yousaff: Doomsday.">
+<meta name="theme-color" content="#020804">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IBM+Plex+Mono:wght@300;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #010402;
+    --bg-core: #06170c;
+    --fg: #b9e6c4;
+    --green: #2fbf5f;
+    --deep: #0f5c2a;
+    --dim: #3d5a45;
+    --faint: #1f3326;
+    --glow: rgba(47, 191, 95, 0.55);
+    --glow-soft: rgba(47, 191, 95, 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+  body {
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 45%, var(--bg-core) 0%, transparent 70%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--fg);
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 100vh;
+    padding: 48px 16px;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    width: 80vmin; height: 80vmin;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, var(--glow-soft) 0%, transparent 65%);
+    filter: blur(24px);
+    animation: breathe 7s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+  body::after {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.3) 0 1px, transparent 1px 3px),
+      radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.85) 100%);
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.92); }
+    50%      { opacity: 1;   transform: translate(-50%, -50%) scale(1.08); }
+  }
+  @keyframes flicker {
+    0%, 92%, 100% { opacity: 1; }
+    93% { opacity: 0.55; } 94% { opacity: 1; } 96% { opacity: 0.75; } 97% { opacity: 1; }
+  }
+  @keyframes rise {
+    0%   { opacity: 0; transform: translateY(14px); filter: blur(8px); letter-spacing: 0.5em; }
+    60%  { opacity: 1; filter: blur(0); }
+    100% { opacity: 1; transform: none; filter: blur(0); letter-spacing: 0.18em; }
+  }
+  @keyframes flare {
+    0%   { text-shadow: 0 0 4px var(--glow), 0 0 30px var(--glow), 0 0 80px var(--green); }
+    100% { text-shadow: 0 0 8px var(--glow-soft), 0 0 28px var(--deep); }
+  }
+  @keyframes fadein { to { opacity: 1; } }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    font-size: clamp(1.5rem, 5.5vw, 3rem);
+    text-transform: uppercase;
+    text-shadow: 0 0 10px var(--glow), 0 0 40px var(--deep);
+    animation: flicker 9s infinite;
+    margin-bottom: 0.5em;
+  }
+  .sub {
+    font-family: 'Cinzel', serif;
+    color: var(--dim);
+    letter-spacing: 0.45em;
+    font-size: clamp(0.65rem, 2vw, 0.9rem);
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+
+  button.seal {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.8rem, 2.4vw, 1rem);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: transparent;
+    border: 1px solid var(--deep);
+    padding: 1rem 2.2rem 1rem 2.6rem;
+    cursor: pointer;
+    text-shadow: 0 0 10px var(--glow);
+    box-shadow: 0 0 20px rgba(15, 92, 42, 0.4), inset 0 0 20px rgba(15, 92, 42, 0.25);
+    transition: box-shadow 0.6s, border-color 0.6s, opacity 1.2s;
+  }
+  button.seal:hover, button.seal:focus-visible {
+    border-color: var(--green);
+    box-shadow: 0 0 35px var(--glow-soft), 0 0 60px rgba(15, 92, 42, 0.5), inset 0 0 25px rgba(47, 191, 95, 0.2);
+    outline: none;
+  }
+  button.seal.gone { opacity: 0; pointer-events: none; }
+
+  ol.returns {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.8rem, 5vh, 2.8rem);
+    max-width: 44rem;
+  }
+  ol.returns li { opacity: 0; }
+  ol.returns li.shown { animation: rise 2.4s cubic-bezier(.2,.7,.2,1) forwards; }
+  .name {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.3rem, 5vw, 2.4rem);
+    color: var(--fg);
+    text-transform: uppercase;
+  }
+  li.shown .name { animation: flare 3s ease-out forwards; }
+  .verdict {
+    display: block;
+    margin-top: 0.6rem;
+    font-family: 'Cinzel', serif;
+    font-style: italic;
+    color: var(--dim);
+    font-size: clamp(0.75rem, 2.2vw, 0.95rem);
+    letter-spacing: 0.15em;
+    text-transform: none;
+  }
+  .verdict em { color: var(--green); font-style: normal; text-shadow: 0 0 10px var(--glow-soft); }
+
+  .stage { min-height: 8rem; display: flex; flex-direction: column; align-items: center; }
+  .coda {
+    margin-top: 4rem;
+    font-family: 'Cinzel', serif;
+    font-style: italic;
+    color: var(--dim);
+    letter-spacing: 0.2em;
+    font-size: clamp(0.75rem, 2.2vw, 0.95rem);
+    opacity: 0;
+  }
+  .coda.shown { animation: fadein 3s ease forwards; }
+  a.back {
+    margin-top: 3rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--faint);
+    text-decoration: none;
+    transition: color 0.4s, text-shadow 0.4s;
+  }
+  a.back:hover { color: var(--green); text-shadow: 0 0 10px var(--glow); }
+
+  @media (prefers-reduced-motion: reduce) {
+    body::before, h1 { animation: none; }
+    ol.returns li.shown, li.shown .name { animation: fadein 0.4s forwards; }
+  }
+</style>
+</head>
+<body>
+  <h1>They Shall Return</h1>
+  <div class="sub">As it was foretold</div>
+
+  <div class="stage">
+    <button class="seal" id="seal" type="button">Break the seal</button>
+    <ol class="returns" id="returns" aria-live="polite"></ol>
+    <p class="coda" id="coda">And more shall rise ere the Ides.</p>
+  </div>
+
+  <a class="back" href="../">&larr; Return to the clock</a>
+
+<script>
+  // Add or reorder names here. Each one rises in turn.
+  const RETURNING = [
+    'Ali DaGayBoi',
+    'Hypergamypal',
+    'Armann',
+    'Jasdeep',
+  ];
+
+  const list = document.getElementById('returns');
+  const seal = document.getElementById('seal');
+  const coda = document.getElementById('coda');
+  const GAP = 2600; // ms between each name
+
+  RETURNING.forEach(name => {
+    const li = document.createElement('li');
+    li.innerHTML = '<span class="name"></span>' +
+      '<span class="verdict">shall return in <em>Yousaff: Doomsday</em></span>';
+    li.querySelector('.name').textContent = name;
+    list.appendChild(li);
+  });
+
+  seal.addEventListener('click', () => {
+    seal.classList.add('gone');
+    setTimeout(() => {
+      seal.style.display = 'none';
+      [...list.children].forEach((li, i) => {
+        setTimeout(() => li.classList.add('shown'), i * GAP);
+      });
+      setTimeout(() => coda.classList.add('shown'), RETURNING.length * GAP + 600);
+    }, 1200);
+  }, { once: true });
+</script>
+</body>
+</html>
