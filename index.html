@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yousaff: Doomsday</title>
+<meta name="description" content="The hour approacheth. Beware thou the Ides of March.">
+<meta name="theme-color" content="#020804">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IBM+Plex+Mono:wght@300;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #010402;
+    --bg-core: #06170c;
+    --fg: #b9e6c4;
+    --green: #2fbf5f;
+    --deep: #0f5c2a;
+    --dim: #3d5a45;
+    --faint: #1f3326;
+    --glow: rgba(47, 191, 95, 0.55);
+    --glow-soft: rgba(47, 191, 95, 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 48%, var(--bg-core) 0%, transparent 70%),
+      var(--bg);
+    color: var(--fg);
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px 16px;
+    overflow: hidden;
+  }
+  /* breathing green aura behind the clock */
+  body::before {
+    content: "";
+    position: fixed;
+    width: 70vmin; height: 70vmin;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, var(--glow-soft) 0%, transparent 65%);
+    filter: blur(20px);
+    animation: breathe 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+  /* scanlines + vignette */
+  body::after {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.3) 0 1px, transparent 1px 3px),
+      radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.85) 100%);
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.92); }
+    50%      { opacity: 1;    transform: translate(-50%, -50%) scale(1.08); }
+  }
+  @keyframes flicker {
+    0%, 92%, 100% { opacity: 1; }
+    93% { opacity: 0.55; }
+    94% { opacity: 1; }
+    96% { opacity: 0.75; }
+    97% { opacity: 1; }
+  }
+  @keyframes pulse {
+    0%   { text-shadow: 0 0 6px var(--glow), 0 0 28px var(--glow), 0 0 60px var(--deep); }
+    100% { text-shadow: 0 0 3px var(--glow-soft), 0 0 14px var(--glow-soft); }
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    font-size: clamp(1.6rem, 6vw, 3.4rem);
+    text-transform: uppercase;
+    color: var(--fg);
+    text-shadow: 0 0 10px var(--glow), 0 0 40px var(--deep);
+    animation: flicker 9s infinite;
+    margin-bottom: 0.4em;
+  }
+  .sub {
+    font-family: 'Cinzel', serif;
+    color: var(--dim);
+    letter-spacing: 0.5em;
+    font-size: clamp(0.7rem, 2.2vw, 0.95rem);
+    text-transform: uppercase;
+    margin-bottom: 3.5rem;
+  }
+  .clock {
+    display: flex;
+    gap: clamp(0.6rem, 3vw, 2.5rem);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .unit { min-width: 4.2ch; }
+  .num {
+    font-weight: 300;
+    font-size: clamp(2.4rem, 11vw, 6.5rem);
+    line-height: 1;
+    color: var(--fg);
+    text-shadow: 0 0 8px var(--glow-soft), 0 0 30px var(--glow-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  .unit.sec .num {
+    color: var(--green);
+    text-shadow: 0 0 6px var(--glow), 0 0 28px var(--glow), 0 0 60px var(--deep);
+  }
+  .unit.sec .num.tick { animation: pulse 1s ease-out; }
+  .label {
+    margin-top: 0.8rem;
+    font-size: clamp(0.6rem, 1.8vw, 0.8rem);
+    letter-spacing: 0.4em;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+  .sep {
+    font-size: clamp(2.4rem, 11vw, 6.5rem);
+    line-height: 1;
+    color: var(--deep);
+    font-weight: 300;
+    text-shadow: 0 0 12px var(--deep);
+  }
+  .omen {
+    margin-top: 4rem;
+    font-family: 'Cinzel', serif;
+    font-style: italic;
+    color: var(--dim);
+    font-size: clamp(0.8rem, 2.4vw, 1rem);
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 10px var(--glow-soft);
+  }
+  .date {
+    margin-top: 0.8rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    color: var(--faint);
+    text-transform: uppercase;
+  }
+  .ended h1, .ended .num { color: var(--green); text-shadow: 0 0 10px var(--glow), 0 0 50px var(--glow); }
+  @media (max-width: 520px) { .sep { display: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    body::before, h1, .unit.sec .num.tick { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <h1>Yousaff: Doomsday</h1>
+  <div class="sub">The hour approacheth</div>
+
+  <div class="clock" id="clock">
+    <div class="unit"><div class="num" id="d">---</div><div class="label">Dayes</div></div>
+    <div class="sep">:</div>
+    <div class="unit"><div class="num" id="h">--</div><div class="label">Houres</div></div>
+    <div class="sep">:</div>
+    <div class="unit"><div class="num" id="m">--</div><div class="label">Minutes</div></div>
+    <div class="sep">:</div>
+    <div class="unit sec"><div class="num" id="s">--</div><div class="label">Seconds</div></div>
+  </div>
+
+  <p class="omen" id="omen">Beware thou the Ides of March.</p>
+  <p class="date">XV · III · MMXXVII</p>
+
+<script>
+  // Ides of March: 15 March 2027, 00:00:00 Mountain Time (MDT, UTC-6)
+  const TARGET = new Date('2027-03-15T00:00:00-06:00').getTime();
+  const el = id => document.getElementById(id);
+  const pad = (n, w = 2) => String(n).padStart(w, '0');
+  const secEl = el('s');
+
+  function tick() {
+    const diff = TARGET - Date.now();
+    if (diff <= 0) {
+      el('d').textContent = '000';
+      el('h').textContent = el('m').textContent = secEl.textContent = '00';
+      el('omen').textContent = 'Ay, the Ides of March are come.';
+      document.body.classList.add('ended');
+      return;
+    }
+    const s = Math.floor(diff / 1000);
+    el('d').textContent = pad(Math.floor(s / 86400), 3);
+    el('h').textContent = pad(Math.floor(s % 86400 / 3600));
+    el('m').textContent = pad(Math.floor(s % 3600 / 60));
+    secEl.textContent = pad(s % 60);
+    secEl.classList.remove('tick'); void secEl.offsetWidth; secEl.classList.add('tick');
+    // re-sync to the exact second boundary each tick
+    setTimeout(tick, (diff % 1000) || 1000);
+  }
+  tick();
+</script>
+</body>
+</html>
